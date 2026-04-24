@@ -5,7 +5,7 @@ import axios from "axios";
 // replace the localhost URL below with your deployed backend URL.
 // Example: const BASE_URL = "https://your-app.onrender.com/api/items";
 // =============================================
-const BASE_URL = "http://localhost:5000/api/items";
+const BASE_URL = "https://mern-itemsmanage.onrender.com/api/items";
 
 // Get all items
 export const fetchItems = () => axios.get(BASE_URL);
