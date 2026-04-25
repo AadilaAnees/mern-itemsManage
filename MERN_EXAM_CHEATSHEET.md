@@ -252,3 +252,44 @@ git push
 - Render: https://render.com
 - Netlify: https://netlify.com
 - GitHub: https://github.com
+
+DELETE — copy this exactly
+js// DELETE /api/items/:id - Delete an item
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedItem = await Item.findByIdAndDelete(req.params.id);
+    if (!deletedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+    res.json({ message: 'Item deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+PUT — copy this exactly
+js// PUT /api/items/:id - Update an item
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+    res.json(updatedItem);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+The Only 2 Lines You Actually Need to Memorize
+Everything else is just copied from your existing GET/POST structure. The only new things are:
+js// DELETE — this one line does the work
+await Item.findByIdAndDelete(req.params.id);
+
+// PUT — this one line does the work
+await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+Notice how your existing POST uses err.status(400) for catch, and GET uses 500 — keep that same pattern. DELETE uses 500, PUT uses 400. That matches what you already have.
