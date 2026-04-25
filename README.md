@@ -167,3 +167,73 @@ Commit and push this change.
 **Build fails on Netlify/Vercel:**
 - Check that your base directory is set to `frontend`
 - Make sure all npm packages are in `dependencies` not `devDependencies`
+
+
+🏗️ Phase 1: The Backend (Node/Express)
+Initialize: mkdir backend && cd backend && npm init -y
+
+Install: npm install express mongoose cors dotenv
+
+Environment: Create .env → add MONGO_URI and PORT=5000.
+
+Ignore: Create .gitignore → add node_modules and .env.
+
+Run: node server.js (or npx nodemon server.js if installed).
+
+🎨 Phase 2: The Frontend (React)
+Initialize: (In root folder) npx create-react-app frontend
+
+Navigate & Install: cd frontend && npm install axios
+
+Run: npm start (Runs on localhost:3000).
+
+Build (for deployment): npm run build.
+
+📤 Phase 3: Git & GitHub
+Initialize Git: (In root folder) git init
+
+Create Root .gitignore:
+
+Plaintext
+node_modules
+.env
+build
+Connect to GitHub:
+
+git add .
+
+git commit -m "Complete MERN Project"
+
+git branch -M main
+
+git remote add origin <YOUR_RE_URL>
+
+git push -u origin main
+
+🚀 Phase 4: Deployment
+Backend (Render)
+New Web Service → Connect GitHub Repo.
+
+Root Directory: backend.
+
+Build Command: npm install.
+
+Start Command: node server.js.
+
+Env Vars: Add MONGO_URI (from Atlas) and PORT (5000).
+
+Copy Live URL: (e.g., https://api.onrender.com).
+
+Bridge Update (React)
+Update App.js: Change localhost:5000 to your Render URL.
+
+Push: git add . -> git commit -> git push.
+
+Frontend (Netlify)
+New Site from Git → Connect Repo.
+
+Base Directory: frontend.
+
+Build Command: npm run build.
+
+Publish Directory: build.
