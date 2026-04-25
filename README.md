@@ -173,6 +173,8 @@ Commit and push this change.
 Initialize: mkdir backend && cd backend && npm init -y
 
 Install: npm install express mongoose cors dotenv
+if thats error run --> Set -ExexutionPolicy -Scope Process -ExecutionPolicy Bypass
+
 
 Environment: Create .env → add MONGO_URI and PORT=5000.
 
