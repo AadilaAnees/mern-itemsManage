@@ -293,3 +293,135 @@ await Item.findByIdAndDelete(req.params.id);
 // PUT — this one line does the work
 await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
 Notice how your existing POST uses err.status(400) for catch, and GET uses 500 — keep that same pattern. DELETE uses 500, PUT uses 400. That matches what you already have.
+
+
+FRONTEND
+
+const fetchItems = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/items');
+      setItems(res.data);
+    } catch (err) {
+      console.error('Error fetching items:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:5000/api/items', formData);
+      fetchItems(); // Refresh the list
+      setFormData({
+        name: '',
+        price: '',
+        description: '',
+        category: '',
+        
+      });
+    } catch (err) {
+      console.error('Error creating item:', err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:5000/api/items/${id}`);
+      fetchItems();
+      
+    } catch (err) {
+      console.error('Error fetching items:', err);
+    }
+    console.log(`Delete item with ID: ${id}`);
+  };
+
+The Easy Pattern to Remember for Frontend
+Look at your existing code — they all follow the same structure:
+js// GET
+await axios.get('http://localhost:5000/api/items');
+
+// POST
+await axios.post('http://localhost:5000/api/items', formData);
+
+// DELETE
+await axios.delete(`http://localhost:5000/api/items/${id}`);
+
+// PUT
+await axios.put(`http://localhost:5000/api/items/${id}`, formData);
+The rule:
+
+No id needed → use normal quotes '...' → GET and POST
+Id needed → use backticks `...${id}` → DELETE and PUT
+Sending data → add , formData at the end → POST and PUT
+
+
+What to Do After (for both DELETE and PUT)
+After calling   What to do
+POST --> fetchItems() — refresh list
+DELETE --> fetchItems() — refresh list
+PUT --> fetchItems() — refresh list
+
+
+in app.jsx
+<div className="form-section">
+        <h2>Add New Item</h2>
+        <form onSubmit={handleSubmit}>
+            
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Price:</label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>description:</label>
+            <input
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Category:</label>
+            <select name="category" id="category" value={formData.category} onChange={handleChange} required>
+              <option value=""disabled>Select</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Food">Food</option>
+              <option value="Other">Other</option>
+            </select>
+          
+          </div>
+
+          
+
+          <button type="submit" className="btn-primary">Add Item</button>
+        </form>
+      </div>
+
