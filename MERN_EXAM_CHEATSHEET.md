@@ -425,3 +425,31 @@ in app.jsx
         </form>
       </div>
 
+The Rule for Any package.json
+json"scripts": {
+  "start": "node index.js",   ← npm start       (only "start" doesn't need "run")
+  "dev":   "vite",            ← npm run dev
+  "build": "vite build"       ← npm run build
+}
+Only start can be run as npm start. Everything else needs npm run in front.
+
+All Commands You Might See in Exam
+Script nameCommand to run
+"start" npm start
+"dev" npm run dev
+"build" npm run build
+"server" npm run server
+"client" npm run client
+"preview" npm run preview
+
+Netlify/Render Settings Based on YOUR Files
+Render (Backend)
+Field   Value
+Root Directory - backend
+Build Command - npm install
+Start Command - npm start
+Netlify (Frontend)
+Field   Value
+Base Directory- frontend
+Build Command - npm run build
+Publish Directory - frontend/dist
